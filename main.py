@@ -1,3 +1,7 @@
+import random
+
+NAMES = ['Seb', 'Gordon', 'Mack', 'Abdule']
+
 
 class MonopolyGame():
 
@@ -10,10 +14,28 @@ class MonopolyGame():
         for p in players:
             self.board.add_player(p)
 
+    def roll_die(self):
+        return random.randint(1, 6) + random.randint(1, 6)
+
+    def run(self, rounds=20):
+        for i in range(rounds):
+            print('Round {}'.format(i + 1))
+            for active_player in players:
+                print('Player {}`s turn'.format(active_player.name))
+                print('Start Square: {}'.format(board.get_player_position(active_player)))
+                roll = self.roll_die()
+                board.advance_player(active_player, roll)
+                print('Player {} rolled {}'.format(active_player.name, roll))
+                print('End Square: {}'.format(board.get_player_position(active_player)))
+                print('\n')
+            print('---------------------------------------\n')
+
 
 class Board():
 
-    def __init__(self, board_size=40):
+    DEFAULT_BOARD_SIZE = 40
+
+    def __init__(self, board_size=DEFAULT_BOARD_SIZE):
         self._build_board(board_size)
         self._positions = {}
 
@@ -42,16 +64,22 @@ class Board():
         self._positions[player] = square
 
     def get_square_by_name(self, name):
+        """
+        name:   <str>
+        """
         for s in self._squares:
-            if s.name == name:
+            if str(s) == name:
                 return s
         assert False, 'Square {} does not exist on this board'.format(name)
 
 
 class Player():
 
-    def __init__(self):
-        pass
+    def __init__(self, name):
+        self.name = name
+
+    def __str__(self):
+        return self.name
 
 
 class Square():
@@ -59,14 +87,13 @@ class Square():
     def __init__(self, id):
         self.id = id
 
-    @property
-    def name(self):
+    def __str__(self):
         return str(self.id)
 
 
 if __name__ == '__main__':
-    num_of_players = 4
-    players = [Player() for _ in range(num_of_players)]
+    players = [Player(name) for name in NAMES]
     board = Board()
     game = MonopolyGame(board)
     game.add_players(players)
+    game.run()
