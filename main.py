@@ -16,23 +16,27 @@ class MonopolyGame():
     def add_players(self, players):
         self.players += players
         for p in players:
-            self.board.add_player(p)
+            p.position = self.board.start_square
 
     def roll_die(self):
         return self.dice_function()
+
+    def move_player(self, active_player):
+        print('Player {}`s turn'.format(active_player.name))
+        print('Start Square: {}'.format(active_player.position))
+        roll = self.roll_die()
+        active_player.position = self.board.traverse(active_player.position, roll)
+        print('Player {} rolled {}'.format(active_player.name, roll))
+        print('End Square: {}'.format(active_player.position))
+        print('\n')
+
 
     def run(self, rounds=20):
         for i in range(rounds):
             print('Round {}'.format(i + 1))
             for active_player in self.players:
-                print('Player {}`s turn'.format(active_player.name))
-                print('Start Square: {}'.format(self.board.get_player_position(active_player)))
-                roll = self.roll_die()
-                self.board.advance_player(active_player, roll)
-                print('Player {} rolled {}'.format(active_player.name, roll))
-                print('End Square: {}'.format(self.board.get_player_position(active_player)))
-                print('\n')
-            input()
+                self.move_player(active_player)
+            # input()
             print('---------------------------------------\n')
 
 
@@ -42,7 +46,6 @@ class Board():
 
     def __init__(self, board_size=DEFAULT_BOARD_SIZE):
         self._build_board(board_size)
-        self._positions = {}
 
     @property
     def board_size(self):
@@ -52,21 +55,10 @@ class Board():
         self._squares = [Square(i) for i in range(board_size)]
         self.start_square = self._squares[0]
 
-    def add_player(self, player):
-        self._positions[player] = self.start_square
-
-    def get_player_position(self, player):
-        return self._positions[player]
-
-    def advance_player(self, player, amount):
-        current_square = self.get_player_position(player)
+    def traverse(self, current_square, amount):
         index = self._squares.index(current_square)
         new_index = (index + amount) % self.board_size
-        new_square = self._squares[new_index]
-        self.move_player_to_square(player, new_square)
-
-    def move_player_to_square(self, player, square):
-        self._positions[player] = square
+        return self._squares[new_index]
 
     def get_square_by_name(self, name):
         """
@@ -85,6 +77,14 @@ class Player():
 
     def __str__(self):
         return self.name
+
+    @property
+    def position(self):
+        return self._position
+
+    @position.setter
+    def position(self, new_position):
+        self._position = new_position
 
 
 class Square():
