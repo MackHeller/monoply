@@ -2,12 +2,16 @@ import random
 
 NAMES = ['Seb', 'Gordon', 'Mack', 'Abdule']
 
+def roll_two_six_sided_dice():
+    return random.randint(1, 6) + random.randint(1, 6)
+
 
 class MonopolyGame():
 
-    def __init__(self, board):
+    def __init__(self, board, dice_function=roll_two_six_sided_dice):
         self.players = []
         self.board = board
+        self.dice_function = dice_function
 
     def add_players(self, players):
         self.players += players
@@ -15,19 +19,20 @@ class MonopolyGame():
             self.board.add_player(p)
 
     def roll_die(self):
-        return random.randint(1, 6) + random.randint(1, 6)
+        return self.dice_function()
 
     def run(self, rounds=20):
         for i in range(rounds):
             print('Round {}'.format(i + 1))
-            for active_player in players:
+            for active_player in self.players:
                 print('Player {}`s turn'.format(active_player.name))
-                print('Start Square: {}'.format(board.get_player_position(active_player)))
+                print('Start Square: {}'.format(self.board.get_player_position(active_player)))
                 roll = self.roll_die()
-                board.advance_player(active_player, roll)
+                self.board.advance_player(active_player, roll)
                 print('Player {} rolled {}'.format(active_player.name, roll))
-                print('End Square: {}'.format(board.get_player_position(active_player)))
+                print('End Square: {}'.format(self.board.get_player_position(active_player)))
                 print('\n')
+            input()
             print('---------------------------------------\n')
 
 

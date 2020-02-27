@@ -36,3 +36,13 @@ def test_move_player():
     assert board.get_player_position(player) == board.start_square
     board.move_player_to_square(player, board.get_square_by_name('10'))
     assert board.get_player_position(player) == board.get_square_by_name('10')
+
+
+def test_two_rounds():
+    board = Board()
+    player = Player('Seb')
+    game = MonopolyGame(board, dice_function=lambda: 5)
+    game.add_players([player])
+    game.run(rounds=2)
+    board.get_player_position(player) == board.get_square_by_name('10')
+
