@@ -1,4 +1,6 @@
-from main import Player, Board, MonopolyGame
+from entities.board import Board
+from entities.player import Player
+from entities.game import MonopolyGame
 
 
 def test_init_many_players():
@@ -23,7 +25,7 @@ def test_traverse_past_start_square():
 
 def test_move_player():
     board = Board()
-    game = MonopolyGame(board, dice_function= lambda: 5)
+    game = MonopolyGame(board, dice_function=lambda: 5)
     player = Player('Seb')
     game.add_players([player])
     game.move_player(player)
@@ -37,4 +39,3 @@ def test_two_rounds():
     game.add_players([player])
     game.run(rounds=2)
     assert player.position == board.get_square_by_name('10')
-
