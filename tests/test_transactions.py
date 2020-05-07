@@ -55,20 +55,10 @@ def test_buy_sell_property():
 
     assert prop.owner == b
 
-    prop.sell_to(b, p, 60)
+    prop.sell_to(p, 60)
 
     assert p.balance == 40
     assert prop.owner == p
-
-
-def test_cannot_sell_property_you_dont_own():
-    b = Bank()
-    prop = Property(owner=b)
-    p1 = Player('tester', 100)
-    p2 = Player('tester', 100)
-
-    with pytest.raises(AssertionError):
-        prop.sell_to(p1, p2, 60)
 
 
 def test_cannot_sell_property_if_buyer_balance_insufficient():
@@ -77,7 +67,18 @@ def test_cannot_sell_property_if_buyer_balance_insufficient():
     p = Player('tester', 40)
 
     with pytest.raises(AssertionError):
-        prop.sell_to(b, p, 60)
+        prop.sell_to(p, 60)
 
     assert p.balance == 40
     assert prop.owner == b
+
+
+def test_can_pay_rent():
+    p1 = Player('tester', 100)
+    p2 = Player('tester', 100)
+    prop = Property(owner=p1, rent=60)
+
+    prop.pay_rent()
+
+    assert p1.balance == 160
+    assert p2.balance == 40

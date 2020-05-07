@@ -10,10 +10,6 @@ class Player(Transactable):
     def __str__(self):
         return self.name
 
-    @property
-    def position(self):
-        return self._position
-
     def pay(self, payee, amount):
         assert amount <= self.balance
         self.balance = self.balance - amount
@@ -21,6 +17,10 @@ class Player(Transactable):
 
     def receive(self, amount):
         self.balance = self.balance + amount
+
+    @property
+    def position(self):
+        return self._position
 
     @position.setter
     def position(self, new_position):
