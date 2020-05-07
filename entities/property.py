@@ -19,7 +19,6 @@ class Property():
 
     def mortgage(self, bank):
         assert not self.is_mortgaged, 'Property was already mortgaged'
-        mortgage_amount = self.price / 2
         bank.pay(self.owner, self.mortgage_amount)
         self._mortgaged = True
 
@@ -31,7 +30,6 @@ class Property():
     @property
     def mortgage_amount(self):
         return self.price / 2
-
 
     @property
     def is_mortgaged(self):

@@ -107,7 +107,7 @@ def test_cannot_double_mortgage_property():
 
 
 def test_mortgaged_property_charges_no_rent():
-    pass
+    assert False, 'Start here next time.'
 
 
 def test_can_repay_mortgage():
