@@ -70,3 +70,15 @@ def test_can_collect_rent():
 
     assert p1.balance == 160
     assert p2.balance == 40
+
+
+def test_cannot_pay_rent_raises_exception():
+    p1 = Player('tester', 100)
+    p2 = Player('tester', 40)
+    prop = Property(owner=p1, rent=60)
+
+    with pytest.raises(InsufficientFundsError):
+        prop.collect_rent(p2)
+
+    assert p1.balance == 100
+    assert p2.balance == 40
