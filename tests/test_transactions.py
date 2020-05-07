@@ -1,3 +1,5 @@
+import pytest
+
 from entities.player import Player
 from entities.bank import Bank
 from entities.property import Property
@@ -25,16 +27,16 @@ def test_player_to_player():
     assert p2.balance == 200
 
 
-def test_transfer_property():
-    b = Bank()
-    prop = Property(owner=b)
-    p = Player('tester', 100)
+# def test_transfer_property():
+    # b = Bank()
+    # prop = Property(owner=b)
+    # p = Player('tester', 100)
 
-    assert prop.owner == b
+    # assert prop.owner == b
 
-    prop.transfer_to(p)
+    # prop.transfer_to(b, p)
 
-    assert prop.owner == p
+    # assert prop.owner == p
 
 
 def test_buy_sell_property():
@@ -44,7 +46,17 @@ def test_buy_sell_property():
 
     assert prop.owner == b
 
-    b.sell_to(p, prop, 60)
+    prop.sell_to(b, p, 60)
 
     assert p.balance == 40
     assert prop.owner == p
+
+
+def test_cannot_sell_property_you_dont_own():
+    b = Bank()
+    prop = Property(owner=b)
+    p1 = Player('tester', 100)
+    p2 = Player('tester', 100)
+
+    with pytest.raises(AssertionError):
+        prop.sell_to(p1, p2, 60)
