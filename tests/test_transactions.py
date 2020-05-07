@@ -1,6 +1,6 @@
 import pytest
 
-from entities.player import Player
+from entities.player import Player, InsufficientFundsError
 from entities.bank import Bank
 from entities.property import Property
 
@@ -30,22 +30,10 @@ def test_player_to_player():
 def test_cannot_go_into_negative_balance():
     p1 = Player('tester', 40)
     p2 = Player('tester', 100)
-    with pytest.raises(AssertionError):
+    with pytest.raises(InsufficientFundsError):
         p1.pay(p2, 60)
     assert p1.balance == 40
     assert p2.balance == 100
-
-
-# def test_transfer_property():
-    # b = Bank()
-    # prop = Property(owner=b)
-    # p = Player('tester', 100)
-
-    # assert prop.owner == b
-
-    # prop.transfer_to(b, p)
-
-    # assert prop.owner == p
 
 
 def test_buy_sell_property():
@@ -66,7 +54,7 @@ def test_cannot_sell_property_if_buyer_balance_insufficient():
     prop = Property(owner=b)
     p = Player('tester', 40)
 
-    with pytest.raises(AssertionError):
+    with pytest.raises(InsufficientFundsError):
         prop.sell_to(p, 60)
 
     assert p.balance == 40

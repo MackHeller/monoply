@@ -1,6 +1,10 @@
 from entities.transactable import Transactable
 
 
+class InsufficientFundsError(Exception):
+    pass
+
+
 class Player(Transactable):
 
     def __init__(self, name, starting_balance=1500):
@@ -11,7 +15,8 @@ class Player(Transactable):
         return self.name
 
     def pay(self, payee, amount):
-        assert amount <= self.balance
+        if amount > self.balance:
+            raise InsufficientFundsError
         self.balance = self.balance - amount
         payee.receive(amount)
 

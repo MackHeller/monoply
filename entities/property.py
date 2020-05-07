@@ -1,3 +1,5 @@
+
+
 class Property():
 
     def __init__(self, owner, rent=0):
