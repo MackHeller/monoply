@@ -8,5 +8,5 @@ class Property():
         acquiror.pay(self.owner, price)
         self.owner = acquiror
 
-    def pay_rent(self):
-        pass
+    def collect_rent(self, payee):
+        payee.pay(self.owner, self.rent)

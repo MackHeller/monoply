@@ -73,12 +73,12 @@ def test_cannot_sell_property_if_buyer_balance_insufficient():
     assert prop.owner == b
 
 
-def test_can_pay_rent():
+def test_can_collect_rent():
     p1 = Player('tester', 100)
     p2 = Player('tester', 100)
     prop = Property(owner=p1, rent=60)
 
-    prop.pay_rent()
+    prop.collect_rent(p2)
 
     assert p1.balance == 160
     assert p2.balance == 40
