@@ -4,7 +4,7 @@ class Property():
 
     _mortgaged = False
 
-    def __init__(self, owner, price=0, rent=0):
+    def __init__(self, owner, price, rent):
         self.owner = owner
         self.rent = rent
         assert price % 2 == 0, 'property price must be even'
