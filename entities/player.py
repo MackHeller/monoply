@@ -15,7 +15,7 @@ class Player(Transactable):
         return self._position
 
     def pay(self, payee, amount):
-        # TODO guard for negative balance
+        assert amount <= self.balance
         self.balance = self.balance - amount
         payee.receive(amount)
 
