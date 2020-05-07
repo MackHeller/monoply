@@ -82,3 +82,33 @@ def test_cannot_pay_rent_raises_exception():
 
     assert p1.balance == 100
     assert p2.balance == 40
+
+
+def test_can_mortgage_property():
+    b = Bank()
+    p1 = Player('tester', 100)
+    prop = Property(owner=p1, price=120)
+    assert prop.mortgaged is False
+
+    prop.mortgage(b)
+
+    assert p1.balance == 160
+    assert prop.mortgaged is True
+
+
+def test_cannot_double_mortgage_property():
+    b = Bank()
+    p1 = Player('tester', 100)
+    prop = Property(owner=p1)
+
+    prop.mortgage(b)
+    with pytest.raises(AssertionError):
+        prop.mortgage(b)
+
+
+def test_mortgaged_property_charges_no_rent():
+    pass
+
+
+def test_can_repay_mortgage():
+    pass
