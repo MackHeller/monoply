@@ -2,7 +2,7 @@
 
 class Property():
 
-    mortgaged = False
+    _mortgaged = False
 
     def __init__(self, owner, price=0, rent=0):
         self.owner = owner
@@ -18,7 +18,21 @@ class Property():
         payee.pay(self.owner, self.rent)
 
     def mortgage(self, bank):
-        assert not self.mortgaged, 'Property was already mortgaged'
+        assert not self.is_mortgaged, 'Property was already mortgaged'
         mortgage_amount = self.price / 2
-        bank.pay(self.owner, mortgage_amount)
-        self.mortgaged = True
+        bank.pay(self.owner, self.mortgage_amount)
+        self._mortgaged = True
+
+    def unmortgage(self, bank):
+        assert self.is_mortgaged, 'Property was not mortgaged'
+        self.owner.pay(bank, self.mortgage_amount)
+        self._mortgaged = False
+
+    @property
+    def mortgage_amount(self):
+        return self.price / 2
+
+
+    @property
+    def is_mortgaged(self):
+        return self._mortgaged

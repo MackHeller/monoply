@@ -88,12 +88,12 @@ def test_can_mortgage_property():
     b = Bank()
     p1 = Player('tester', 100)
     prop = Property(owner=p1, price=120)
-    assert prop.mortgaged is False
+    assert prop.is_mortgaged is False
 
     prop.mortgage(b)
 
     assert p1.balance == 160
-    assert prop.mortgaged is True
+    assert prop.is_mortgaged is True
 
 
 def test_cannot_double_mortgage_property():
@@ -111,4 +111,12 @@ def test_mortgaged_property_charges_no_rent():
 
 
 def test_can_repay_mortgage():
-    pass
+    b = Bank()
+    p1 = Player('tester', 100)
+    prop = Property(owner=p1, price=120)
+    prop._mortgaged = True
+
+    prop.unmortgage(b)
+
+    assert p1.balance == 40
+    assert prop.is_mortgaged is False
