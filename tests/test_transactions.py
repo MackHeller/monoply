@@ -116,7 +116,19 @@ def test_cannot_double_mortgage_property():
 
 
 def test_mortgaged_property_charges_no_rent():
-    assert False, 'Start here next time.'
+    b = Bank()
+    p1 = Player('tester', 100)
+    p2 = Player('tester', 100)
+    prop = _property_factory(owner=p1, rent=60)
+
+    prop.mortgage(b)
+    assert p1.balance == 150
+    assert p2.balance == 100
+
+    prop.collect_rent(p2)
+
+    assert p1.balance == 150
+    assert p2.balance == 100
 
 
 def test_can_repay_mortgage():

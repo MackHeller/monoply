@@ -1,12 +1,16 @@
-from entities.square import Square
+from entities.square import Square, square_factory
+
 
 
 class Board():
 
     DEFAULT_BOARD_SIZE = 40
 
-    def __init__(self, board_size=DEFAULT_BOARD_SIZE):
-        self._build_board(board_size)
+    def __init__(self, board_size=DEFAULT_BOARD_SIZE, board=None):
+        if not board:
+            self._build_board(board_size)
+        else:
+            self._parse_board(board)
 
     @property
     def board_size(self):
@@ -29,3 +33,7 @@ class Board():
             if str(s) == name:
                 return s
         assert False, 'Square {} does not exist on this board'.format(name)
+
+    def _parse_board(self, board):
+        self._squares = [square_factory(i) for i in board['squares']]
+        self.start_square = self._squares[0]

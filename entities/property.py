@@ -15,7 +15,8 @@ class Property():
         self.owner = acquiror
 
     def collect_rent(self, payee):
-        payee.pay(self.owner, self.rent)
+        if not self.is_mortgaged:
+            payee.pay(self.owner, self.rent)
 
     def mortgage(self, bank):
         assert not self.is_mortgaged, 'Property was already mortgaged'
