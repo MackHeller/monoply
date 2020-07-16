@@ -35,3 +35,6 @@ class MonopolyGame():
             for active_player in self.players:
                 self.move_player(active_player)
             print('---------------------------------------\n')
+
+    def take_action(self, active_player):
+        active_player.position.take_action(active_player)
