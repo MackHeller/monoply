@@ -38,3 +38,31 @@ class MonopolyGame():
 
     def take_action(self, active_player):
         active_player.position.take_action(active_player)
+
+"""
+#game
+    ##responsibilities:
+- initialization
+- run the game
+- roll dice
+- add player(s)
+- move player
+....## collaborators
+player responsibilities:
+- pay / receive
+
+#board
+##responsibilities:
+
+#bank
+##responsibilities:
+- pay / receive
+
+#square
+##responsibilities:
+-take_action (requires bank, acccesed through board)
+
+....## collaborators:
+    bank
+
+"""

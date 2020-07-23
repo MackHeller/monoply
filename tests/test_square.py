@@ -46,3 +46,6 @@ def test_collect_money_on_go():
     balance = players[0].balance
     game.take_action(players[0])
     assert balance + 200 == players[0].balance
+
+def test_next_time():
+  assert False, "start with assigning responsibilities"
