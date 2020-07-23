@@ -36,5 +36,13 @@ def test_move_and_buy_property():
     assert players[0].position == property_square
     assert property_square.property.owner == players[0]
 
-def test_collect_money_on_pass_go():
-    assert False, 'start here'
+def test_collect_money_on_go():
+    players = [Player('Mack')]
+    board = Board(board=SQUARES)
+    game = MonopolyGame(board, dice_function=lambda: 1)
+    game.add_players(players)
+    go_square = game.board._squares[0]
+    assert players[0].position == game.board.start_square
+    balance = players[0].balance
+    game.take_action(players[0])
+    assert balance + 200 == players[0].balance

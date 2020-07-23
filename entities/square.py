@@ -36,6 +36,9 @@ class GoSquare(Square):
     def __init__(self, *args, **kwargs):
         super().__init__(name='go', **kwargs)
 
+    def take_action(self, active_player):
+        self.board.bank.pay(active_player, 200)
+
 
 TYPE_TO_SQUARE = {
     'property': PropertySquare,

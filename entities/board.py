@@ -19,7 +19,7 @@ class Board():
         return len(self._squares)
 
     def _build_board(self, board_size):
-        self._squares = [Square(i) for i in range(board_size)]
+        self._squares = [Square(name=i, board=self) for i in range(board_size)]
         self.start_square = self._squares[0]
 
     def traverse(self, current_square, amount):
